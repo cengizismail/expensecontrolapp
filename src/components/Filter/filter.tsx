@@ -1,21 +1,23 @@
 import { View, Text, Picker } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
-export const Filter = () => {
-
+export const Filter = ({categoryChanged}) => {
+  const [selectedValue, setSelectedValue] = useState("Tüm Sektörler");
   return (
     <View style={{ display: "flex", flexDirection: "row" }}>
 
       <Picker
         style={{ height: 50, width: 200 }}
-
+onValueChange={(value)=> {
+  setSelectedValue(value)
+   categoryChanged(value)}}
+selectedValue={selectedValue}
       >
-        <Picker.Item label="Tüm Sektörler" value="java" />
-        <Picker.Item label="Giyim ve Aksesuar" value="js" />
-        <Picker.Item label="Market" value="js" />
-        <Picker.Item label="Cafe ve Restorant" value="js" />
-        <Picker.Item label="Ulaşım" value="js" />
-
+        <Picker.Item label="Tüm Sektörler" value="Tüm Sektörler" />
+        <Picker.Item label="Giyim ve Aksesuar" value="Giyim ve Aksesuar" />
+        <Picker.Item label="Market" value="Market" />
+        <Picker.Item label="Cafe ve Restorant" value="Cafe ve Restorant" />
+        <Picker.Item label="Ulaşım" value="Ulaşım" />
       </Picker>
       <Picker
         style={{ height: 50, width: 200 }}
