@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { Button } from 'react-native-elements';
 import NumberFormat from 'react-number-format'
 import { connect, useDispatch, useSelector } from 'react-redux';
-import {  saveNewExpense} from "../../actions/expenses";
+import { saveNewExpense } from "../../actions/expenses";
 const styles = StyleSheet.create({
 
     button1: {
@@ -30,11 +30,12 @@ export const FormModel = ({ visibleProp, closeProp }) => {
     const handleChange = (amount) => {
         setCostValue(amount)
     }
-const saveHandleChange=()=>{
-    console.log("saveHandleChange");
-    dispatch(saveNewExpense(categorySelectedValue,costValue));
-    closeProp();
-}
+    const saveHandleChange = () => {
+        if (costValue != null && categorySelectedValue != "1") {
+            dispatch(saveNewExpense(categorySelectedValue, costValue));
+            closeProp();
+        }
+    }
 
     return (
         <Modal visible={visibleProp}
@@ -64,6 +65,7 @@ const saveHandleChange=()=>{
                     underlineColorAndroid="transparent"
                     onChangeText={handleChange}
                     keyboardType="numeric"
+
                 />
 
                 <TouchableOpacity
