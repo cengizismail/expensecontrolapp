@@ -1,4 +1,4 @@
-import React, { Component,useState } from 'react'
+import React, { Component, useState } from 'react'
 import {
   StyleSheet,
   View,
@@ -13,19 +13,18 @@ const styles = StyleSheet.create({
     marginTop: 30,
     display: "flex",
     flexDirection: 'row',
-    marginLeft:10
+    marginLeft: 10
   },
 });
 function getPieValue(expenses: any[]): any[] {
-  console.log("getPieValue",expenses)
   let categoryNames: string[] = [...new Set(expenses.map((item) => item.category))]
   let summaryValues: any[] = [];
   categoryNames.forEach(element1 => {
     let sum: number = 0;
     expenses.forEach(element2 => {
       if (element1 == element2.category) {
-        sum += Number.parseInt(element2.price) ;
-      } 
+        sum += Number.parseInt(element2.price);
+      }
     });
 
     summaryValues.push({ category: element1, totalPrice: sum });
@@ -33,29 +32,28 @@ function getPieValue(expenses: any[]): any[] {
   return summaryValues;
 
 }
-export const PieChart = ({expenses}) => {
-  const pieColor:string[] =["#FF8C00","#808000","#00FFFF","#FF0000","#00FF00","#800000","#008080","#FF00FF"]
+export const PieChart = ({ expenses }) => {
+  const pieColor: string[] = ["#FF8C00", "#808000", "#00FFFF", "#FF0000", "#00FF00", "#800000", "#008080", "#FF00FF"]
 
-let pieSeriesValues:any[]=getPieValue(expenses);
+  let pieSeriesValues: any[] = getPieValue(expenses);
 
-let totalEnpenditures:number=0;
+  let totalEnpenditures: number = 0;
 
-pieSeriesValues.forEach((item)=>{
-  totalEnpenditures+=item.totalPrice;
-});
+  pieSeriesValues.forEach((item) => {
+    totalEnpenditures += item.totalPrice;
+  });
 
-pieSeriesValues.sort((a,b)=> b.totalPrice-a.totalPrice)
-console.log("pieSeriesValuespieSeriesValues",pieSeriesValues)
+  pieSeriesValues.sort((a, b) => b.totalPrice - a.totalPrice)
 
-for (let index = 0; index < pieSeriesValues.length; index++) {
-  pieSeriesValues[index].color=pieColor[index]
-}
+  for (let index = 0; index < pieSeriesValues.length; index++) {
+    pieSeriesValues[index].color = pieColor[index]
+  }
 
-const pieSeriesValue =pieSeriesValues.map((a)=>a.totalPrice*100/totalEnpenditures)
+  const pieSeriesValue = pieSeriesValues.map((a) => a.totalPrice * 100 / totalEnpenditures)
   return (
     <View style={styles.container}>
       <Pie
-        style={{ flex: 1}}
+        style={{ flex: 1 }}
         radius={60}
         innerRadius={40}
         series={pieSeriesValue}
@@ -63,14 +61,14 @@ const pieSeriesValue =pieSeriesValues.map((a)=>a.totalPrice*100/totalEnpenditure
       <View style={{ marginLeft: 30 }}>
         <FlatList
           data={pieSeriesValues}
-          renderItem={({ item }) => <View style={{ display: "flex", flexDirection:"row",marginBottom:10}}>
+          renderItem={({ item }) => <View style={{ display: "flex", flexDirection: "row", marginBottom: 10 }}>
             <Icon
-            style={{width:30 }}
+              style={{ width: 30 }}
               name='check'
               size={20}
               color={item.color}
             />
-            <Text style={{width:100}}>{item.category} </Text>
+            <Text style={{ width: 100 }}>{item.category} </Text>
             <Text>{item.totalPrice}TL</Text>
           </View>
           }
